@@ -6,7 +6,7 @@
 
 > 译者注: Ben 也当了回标题党 (￣▽￣)"
 
-我经常被邀请帮助他人调试他们的 RxJS 代码的问题，或者弄清楚如何构建一个大量使用 RxJS 的异步操作的应用。当这么做的时候，我通常都会看到同样的问题一遍又一遍反复地出现，人们维护大量的 subscription 对象及其处理方法。开发者会一成不变地使用一个 Observable 发起3个 HTTP 请求，然后保留3个 subscription 对象，当某个事件发生时，会调用事件所对应的 subscription 对象。
+我经常受邀去帮助他人调试他们的 RxJS 代码的问题，或者弄清楚如何构建一个大量使用 RxJS 的异步操作的应用。当这么做的时候，我通常都会看到同样的问题一遍又一遍反复地出现，人们维护大量的 subscription 对象及其处理方法。开发者会一成不变地使用一个 Observable 发起3个 HTTP 请求，然后保留3个 subscription 对象，当某个事件发生时，会调用事件所对应的 subscription 对象。
 
 我能理解这是如何发生的。人们习惯性地使用 `addEventListener` N 次，然后还需要做一些清理工作，他们不得不调用 `removeEventListener` N 次。对 subscription 对象也进行同样的处理感觉是自然而然的，在很大程度上来说这是没错，但是还有更好的方式。**保留过多的 subscription 对象是一个信号，你命令式地管理了你的 subscriptions ，并且没有利用 Rx 的强大之处。**
 
