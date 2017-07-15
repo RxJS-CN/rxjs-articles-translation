@@ -24,15 +24,15 @@ class MyGenericComponent extends SomeFrameworkComponent {
   this.dataSub = this.getData()
    .subscribe(data => this.updateData(data));
 
-  const cancelBtn = this.element.querySelector(‘.cancel-button’);
-  const rangeSelector = this.element.querySelector(‘.rangeSelector’);
+  const cancelBtn = this.element.querySelector('.cancel-button');
+  const rangeSelector = this.element.querySelector('.rangeSelector');
 
-  this.cancelSub = Observable.fromEvent(cancelBtn, ‘click’)
+  this.cancelSub = Observable.fromEvent(cancelBtn, 'click')
    .subscribe(() => {
     this.dataSub.unsubscribe();
    });
 
-  this.rangeSub = Observable.fromEvent(rangeSelector, ‘change’)
+  this.rangeSub = Observable.fromEvent(rangeSelector, 'change')
    .map(e => e.target.value)
    .subscribe((value) => {
     if (+value > 500) {
@@ -69,8 +69,8 @@ class MyGenericComponent extends SomeFrameworkComponent {
 
  onMount() {
    const data$ = this.getData();
-   const cancelBtn = this.element.querySelector(‘.cancel-button’);
-   const rangeSelector = this.element.querySelector(‘.rangeSelector’);
+   const cancelBtn = this.element.querySelector('.cancel-button');
+   const rangeSelector = this.element.querySelector('.rangeSelector');
    const cancel$ = Observable.fromEvent(cancelBtn, 'click');
    const range$ = Observable.fromEvent(rangeSelector, 'change').map(e => e.target.value);
    
