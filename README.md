@@ -11,4 +11,4 @@
 
 ## 文章列表
 
- * [[译] RxJS: 别取消订阅](./articles/RxJS:Don't-Unsubscribe.md) [2017-07-15 [@SangKa](https://github.com/SangKa) 翻译]
+ * [[译] RxJS: 别取消订阅](./articles/Don't-Unsubscribe.md) [2017-07-15 [@SangKa](https://github.com/SangKa) 翻译]
