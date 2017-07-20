@@ -31,7 +31,7 @@ Rx.Observable.forkJoin(getPostOne$, getPostTwo$).subscribe(res => console.log(re
 
 ## **_别让我知道直到所有的 Observables 都完成了，然后再一次性的给我所有的值。(以数组的形式)_**
 
-![concat](../assets/Six-Operators-That-You-Must-Know-Forkjoin.gif)
+![concat](../assets/Six-Operators-That-You-Must-Know-ForkJoin.gif)
 
 当你需要并行地运行 Observables 时使用此操作符。
 
