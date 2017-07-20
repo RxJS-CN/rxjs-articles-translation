@@ -12,3 +12,4 @@
 ## 文章列表
 
  * [[译] RxJS: 别取消订阅](./articles/Don't-Unsubscribe.md) [2017-07-15 [@SangKa](https://github.com/SangKa) 翻译]
+ * [[译] RxJS: 6个你必须知道的操作符](./articles/Six-Operators-That-You-Must-Know.md) [2017-07-20 [@SangKa](https://github.com/SangKa) 翻译]
