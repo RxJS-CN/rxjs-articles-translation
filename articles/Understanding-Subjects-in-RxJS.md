@@ -4,7 +4,7 @@
 
 在开始阅读前，本文需要一些 Rx 中的基础知识。
 
-比如说你有两个 Observables:
+比如说你有两个 Observables 订阅:
 
 ```javascript
 const interval$ = Rx.Observable.interval(1000);
