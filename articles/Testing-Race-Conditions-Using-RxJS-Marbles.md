@@ -182,7 +182,6 @@ export class MovieShowingsComponent {
 接下来，我们将 observable 映射成 showings 列表。
 
 ```typescript
-
 @Component({
   selector: 'movie-showings-cmp',
   templateUrl: './movie-showings.component.html'

@@ -14,7 +14,7 @@ Rx.Observable.concat(getPostOne$, getPostTwo$).subscribe(res => console.log(res)
 
 ## **_按顺序订阅 Observables，但是只有当一个完成并让我知道，然后才会开始下一个。_**
 
-![concat](../assets/Six-Operators-That-You-Must-Know-Concat.gif)
+![concat](../assets/Six-Operators-That-You-Must-Know/concat.gif)
 
 当顺序很重要时，使用此操作符，例如当你需要按顺序的发送 HTTP 请求时。
 
@@ -31,7 +31,7 @@ Rx.Observable.forkJoin(getPostOne$, getPostTwo$).subscribe(res => console.log(re
 
 ## **_别让我知道直到所有的 Observables 都完成了，然后再一次性的给我所有的值。(以数组的形式)_**
 
-![concat](../assets/Six-Operators-That-You-Must-Know-ForkJoin.gif)
+![forkJoin](../assets/Six-Operators-That-You-Must-Know/forkJoin.gif)
 
 当你需要并行地运行 Observables 时使用此操作符。
 
@@ -51,7 +51,7 @@ const posts$ = post$.mergeMap(post => getPostInfo$).subscribe(res => console.log
 
 ## **_仅当内部 Obervable 发出值时，通过合并值到外部 Observable 来让我知道。_**
 
-![concat](../assets/Six-Operators-That-You-Must-Know-MergeMap.gif)
+![mergeMap](../assets/Six-Operators-That-You-Must-Know/mergeMap.gif)
 
 ## 4. pairwise
 
@@ -68,7 +68,7 @@ Rx.Observable
 
 页面滚动…
 
-![concat](../assets/Six-Operators-That-You-Must-Know-Pairwise.gif)
+![pairwise](../assets/Six-Operators-That-You-Must-Know/pairwise.gif)
 
 从输入 Observable 的第二个值开始触发。
 
@@ -86,7 +86,7 @@ clicks$.switchMap(event => innerObservable$)
 
 在我们的示例中，每次我点击页面的时，先前的 `interval` 订阅都会取消，然后开启一个新的。
 
-![concat](../assets/Six-Operators-That-You-Must-Know-SwitchMap.gif)
+![switchMap](../assets/Six-Operators-That-You-Must-Know/switchMap.gif)
 
 ## 6. combineLatest 
 
@@ -102,7 +102,7 @@ Rx.Observable.combineLatest(
 
 ## **_当任意 Observable 发出值时让我知道，但还要给我其他 Observalbes 的最新值。(以数组的形式)_**
 
-![concat](../assets/Six-Operators-That-You-Must-Know-CombineLatest.gif)
+![combineLatest](../assets/Six-Operators-That-You-Must-Know/combineLatest.gif)
 
 例如当你需要处理应用中的过滤器时，此操作符非常有用。
 

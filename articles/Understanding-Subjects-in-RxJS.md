@@ -54,7 +54,7 @@ interval$.subscribe(subject);
 
 首先，我们创建了一个新的 Subject 。现在请记住， Subject 还是一个观察者，那么观察者可以做什么呢？它们可以使用 next()、error() 和 completed() 方法来监听 Observables 。如果你将 subject 打印到控制台，你可以看到 subject 拥有如下这些方法。
 
-![Subject Methods](../assets/Understanding-Subjects-in-RxJS-Subject-Method.png)
+![Subject Methods](../assets/Understanding-Subjects-in-RxJS/subject-method.png)
 
 所以在我们这个案例中，Subject 正在观察 interval observable 。简单点说，当你有新值的时候要让我知道。
 
