@@ -15,3 +15,4 @@
  * [[译] RxJS: 6个你必须知道的操作符](./articles/Six-Operators-That-You-Must-Know.md) [2017-07-20 [@SangKa](https://github.com/SangKa) 翻译]
  * [[译] 理解 RxJS 中 Subjects](./articles/Understanding-Subjects-in-RxJS.md) [2017-07-23 [@SangKa](https://github.com/SangKa) 翻译]
  * [[译] RxJS 进阶技巧: 使用 RxJS Marbles 测试竞争条件](./articles/Testing-Race-Conditions-Using-RxJS-Marbles.md) [2017-07-27 [@SangKa](https://github.com/SangKa) 翻译]
+ * [[译] RxJS: 白话 Subjects](./articles/Subjects-For-Human-Beings.md) [2017-08-03 [@SangKa](https://github.com/SangKa) 翻译]
