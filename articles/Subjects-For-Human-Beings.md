@@ -105,7 +105,7 @@ setTimeout(() => {
 
 ![Subject](../assets/Subjects-For-Human-Beings/Subject.gif)
 
-当使用 `Subject` 时，无论你何时 `subject`， 你永远都会得到相同的执行，这点不同于典型的 observable，每次 `subject` 都会开启有个新的执行。(在我们的案例中，这表示你会有两个**不相关的** intervals)
+当使用 `Subject` 时，无论你何时 `subscribe`， 你永远都会得到相同的执行，这点不同于典型的 observable，每次 `subscribe` 都会开启有个新的执行。(在我们的案例中，这表示你会有两个**不相关的** intervals)
 
 **_Subject 让你同享相同的 observable 执行_**
 
