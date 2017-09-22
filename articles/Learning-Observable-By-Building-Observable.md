@@ -1,28 +1,28 @@
-# Learning Observable By Building Observable
+# [译] 通过构建 Observable 来学习 Observable
 
 > 原文链接: [https://medium.com/@benlesh/learning-observable-by-building-observable-d5da57405d87](https://medium.com/@benlesh/learning-observable-by-building-observable-d5da57405d87)
 
-Frequently via social media, or in person at events, I’m asked questions about “hot” vs “cold” observables, or whether or not an observable is “multicast” or “unicast”. People seem to be really mystified by what they feel to be the dark inner-workings of `Rx.Observable`. When asked to describe an observable, people say things like, “They’re streams” or, “They’re like promises”. In fact, I’ve said these things on many occasions and even during public talks.
+通过社交媒体或在活动现场，我经常会被问到关于“热的” vs “冷的” observables，或者 observable 究竟是“多播”还是“单播”。对于 `Rx.Observable`，人们觉得它内部的工作原理完全是黑魔法，这令他们感到十分困惑。当被问及如何描述 observable 时，人们会说：“他们是流”或“他们类似于 promises ”。事实上，我在很多场合甚至在公开演讲中都谈论过这些内容。
 
-The comparison to promises is necessary, but unfortunate. Given that both promises and observables are async primitives, and promises are already widely used and familiar to the JavaScript community, it’s generally a great starting point. Comparing promise’s `then` to observable’s `subscribe`, showing differences in eager vs lazy execution, showing cancellation and reuse of observables, etc. It’s a handy way to introduce beginners to observables.
+与 promises 进行比较是必要的，但也是不幸的。鉴于 promieses 和 observables 都是异步基本类型 ( async primitives )，并且 promises 已被 JavaScript 社区广泛使用和熟悉，这通常是一个很好的起点。将 promise 的 `then` 与 observable 的 `subscribe` 进行比较，promise 是立即执行，而 observable 是惰性执行，是可取消、可复用的，等等。这是向初学者介绍 observables 的理想方式。
 
-There’s one problem: Observables are more different from promises than they are similar. Promises are always multicast. Promise resolution and rejection is always async. When people approach observables as though they’re similar to a promises, they expect these things, but they’re not always true. Observables are sometimes multicast. Observables are usually async. I blame myself a little, I’ve helped perpetuate this misunderstanding.
+但这样有个问题: Observables 与 promises 的不同点要远多于它们之间的相同点。Promises 永远是多播的。Promise 的解析 ( resolution ) 和拒绝 ( rejection ) 永远是异步的。当人们处理 observables 时，仿佛就是在处理 promises，所以他们期望两者的行为也是相似的，但这不并总是对的。Observables 有时是多播的。Observables 通常是异步的。我也有些自责，因为我助长了这种误解的蔓延。
 
-## Observable is just a function that takes an observer and returns a function
+## Observables 只是一个函数，它接收 observer 并返回函数
 
-If you really want to understand observable, you could simply write one. It’s not as hard as it sounds, honestly. An observable, boiled down to it’s smallest parts, is no more than a specific type of function with a specific purpose.
+如果你真的想要理解 observable，你可以自己写个简单的。这并没有听上去那么困难，真心的。将 observable 归结为最精简的部分，无外乎就是某种特定类型的函数，该函数有其针对性的用途。
 
-### Shape:
+### 模型:
 
-  * A function
-  * That accepts an observer: An object with `next`, `error` and `complete` methods on it.
-  * And returns a cancellation function
+  * 函数
+  * 接收 observer: observer 是有 `next`、`error` 和 `complete` 方法的对象
+  * 返回一个可取消的函数
 
-### Purpose:
+### 目的:
 
-To connect the observer to something that produces values (a producer), and return a means to tear down that connection to the producer. The observer is really a registry of handlers that can be pushed values over time.
+将观察者 ( observer ) 与生产者 ( producer ) 连接，并返回一种手段来拆解与生产者之间的连接。观察者实际上是处理函数的注册表，处理函数可以随时间推移推送值。
 
-### Basic Implementation:
+### 基本实现:
 
 ```javascript
 function myObservable(observer) {
@@ -36,13 +36,15 @@ function myObservable(observer) {
 }
 ``` 
 
-[(You can try it out on JSBin here)](http://jsbin.com/yazedu/1/edit?js,console,output)
+[(你可以点击这里进行在线调试)](http://jsbin.com/yazedu/1/edit?js,console,output)
 
-As you can see, there’s not a lot to it. It’s a fairly simple contract.
+如你所见，并没有太多东西，只是一个相当简单的契约。
 
-## Safe Observers: Make Observers Great Again
+## 安全的观察者: 让观察者变得更好
 
 When we talk about RxJS or Reactive programming, generally observables get top billing. But the observer implementation is actually the workhorse of this type of reactive programming. Observables are inert. They’re just functions. They sit there until you `subscribe` to them, they set up your observer, and they’re done, back to being boring old functions waiting to be called. The observers on the other hand, stay active and listen for events from your producers.
+
+
 
 You can subscribe to the observable now with any Plain-Old JavaScript Object (POJO) that has `next`, `error` and `complete` methods on it, but the POJO observer that you’ve used to subscribe to the observable is really just the beginning. In RxJS 5, we need to provide some guarantees for you. Below are just a few of the more important guarantees:
 
