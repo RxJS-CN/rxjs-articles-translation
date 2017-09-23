@@ -42,24 +42,22 @@ function myObservable(observer) {
 
 ## 安全的观察者: 让观察者变得更好
 
-When we talk about RxJS or Reactive programming, generally observables get top billing. But the observer implementation is actually the workhorse of this type of reactive programming. Observables are inert. They’re just functions. They sit there until you `subscribe` to them, they set up your observer, and they’re done, back to being boring old functions waiting to be called. The observers on the other hand, stay active and listen for events from your producers.
+当谈论到 RxJS 或响应式编程时，通常 observables 出现的频率是最高的。但实际上，观察者的实现才是这类响应式编程的中流砥柱。Observables 是惰性的。它们只是函数而已。它们什么也不做直到你 `subscribe` 它们，它们装配好了观察者，然后就完事了，与沉闷的老式函数并无差别，等待着被调用而已。另一方面，观察者保持活跃状态并监听来自生产者的事件。
 
+你可以使用任何有 `next`、`erro` 和 `complete` 方法的简单 JavaScript 对象 (POJO) 来订阅 observable，但你所用来订阅 observable 的 POJO 观察者真的只是个开始。在 RxJS 5中，我们需要为你提供一些保障。下面罗列了一些重要的保障:
 
+### 观察者保障
 
-You can subscribe to the observable now with any Plain-Old JavaScript Object (POJO) that has `next`, `error` and `complete` methods on it, but the POJO observer that you’ve used to subscribe to the observable is really just the beginning. In RxJS 5, we need to provide some guarantees for you. Below are just a few of the more important guarantees:
+  1. 如果你传递的观察者完全没有以上所述的三个方法，也是可以的。
+  2. 你不想在 `complete` 或 `error` 之后调用 `next` 。
+  3. 如果取消订阅了，那么你不想任何方法被调用。
+  4. 调用 `complete` 和 `error` 需要调用取消订阅逻辑。
+  5. 如果 `next` 、`complete` 或 `error` 处理方法抛出异常，你想要调用取消订阅逻辑，以确保不会泄露资源。
+  6. `next`、`error` 和 `complete` 实际上都是可选的。你无需处理每个值、错误或完成。你可能只是想要处理其中一二。
 
-### Observer Guarantees
+为了完成列表中的任务，我们需要将你提供的匿名观察者包装在 “SafeObserver” 中以实施上述保障。因为上面的#2，我们需要追踪 `complete` 或 `error` 是否被调用过。因为#3，我们需要使 SafeObserver 知道消费者何时要取消订阅。最后，因为#4，SafeObserver 实际上需要了解取消订阅逻辑，这样当 `complete` 或 `error` 被调用时才可以调用它。
 
-  1. If you pass an Observer doesn’t have all of the methods implemented, that’s okay.
-  2. You don’t want to call `next` after a `complete` or an `error`
-  3. You don’t want anything called if you’ve unsubscribed.
-  4. Calls to `complete` and `error` need to call unsubscription logic.
-  5. If your `next`, `complete` or `error` handler throws an exception, you want to call your unsubscription logic so you don’t leak resources.
-  6. `next`, `error` and `complete` are all actually optional. You don’t have to handle every value, or errors or completions. You might just want to handle one or two of those things.
-
-In order to accomplish this, we need to wrap the anonymous observer you provide in a “SafeObserver” that enforces the above guarantees. Because of guarantee #2 above, we need to track whether or not `complete` or `error` have been called. Because of #3, we need to let our SafeObserver know when the consumer has signaled it wants to unsubscribe. Finally, because of #4, our SafeObserver is actually going to need to know about the unsubscription logic so it can call it when `complete` or `error` is called.
-
-So if we wanted to do this with our ad-hoc function implementation of an observable above, it’s going to get gross… Here is just a snippet [from a JSBin you can play with to show you just how gross](http://jsbin.com/kezejiy/2/edit?js,console,output). I didn’t want the (very primitive) SafeObserver implementation (in the JSBin) in this example, because it would eat the entire article, but here’s just our observable using the SafeObserver:
+如果我们想要用上面临时实现的 observable 函数来做这些的话，会变得有些粗糙... 这里有个 [JSBin 代码片段](http://jsbin.com/kezejiy/2/edit?js,console,output)，你可以看看并感受下有多粗糙。我并没有想要在这个示例中实现非常正宗的 SafeObserver，因为那么占用整篇文章篇幅，下面是我们的 observable，这次它使用了 SafeObserver:
 
 ```javascript
 function myObservable(observer) {
@@ -77,9 +75,9 @@ function myObservable(observer) {
 }
 ```
 
-## Designing Observable: Ergonomic Observer Safety
+## 设计 Observable: 确保观察者安全
 
-Having observables as a class/object enables us to easily apply a SafeObserver to passed anonymous observers (and handler functions if you like the `subscribe(fn, fn, fn)` signature in RxJS) and provide better ergonomics for the developer-user. By handling the creation of a SafeObserver inside Observable’s `subscribe` implementation, Observables can again be defined in the simplest possible way:
+将 observables 作为类/对象使我们能够轻松地将 SafeObserver 应用于传入的匿名观察者(和处理函数，如果你喜欢 RxJS 中的 `subscribe(fn, fn, fn)` 签名的话) 并为开发人员提供更好的开发体验。通过在 Observable 的 `subscribe` 实现中处理 SafeObserver 的创建，Observables 可以再次以最简单的方式来定义:
 
 ```javascript
 const myObservable = new Observable((observer) => {
@@ -93,11 +91,11 @@ const myObservable = new Observable((observer) => {
 });
 ```
 
-You’ll notice that the above snippet looks almost identical to our first example. It’s easier to read and easier to understand. I’ve augmented our [JSBin example to show the minimal Observable implementation](http://jsbin.com/depeka/edit?js,console).
+你会注意到上面的代码片段与第一个示例看起来几乎一样。但它更容易阅读，也更容易理解。我扩展了 [JSBin 示例来展示 Observable 的最小化实现](http://jsbin.com/depeka/edit?js,console)。
 
-## Operators: Also Just Functions
+## 操作符: 同样只是函数
 
-An “operator” in RxJS is little more than a function that takes a source observable, and returns a new observable that will subscribe to that source observable when you subscribe to it. We can implement a basic, standalone operator like this [(again in JSBin)](http://jsbin.com/xavaga/2/edit?js,console,output):
+RxJS 中的“操作符”只不过是接收源 observable 的函数，并返回一个新的 observable，当你订阅该 observable 时它会订阅源 observable 。我们可以实现一个基础、独立的操作符，如[这个在线 JSBin 示例所示](http://jsbin.com/xavaga/2/edit?js,console,output):
 
 ```javascript
 function map(source, project) {
@@ -112,31 +110,32 @@ function map(source, project) {
 }
 ```
 
-The most important thing to notice about what this operator is doing: When you subscribe to its returned observable, it’s creating a `mapObserver` to do the work and chaining `observer` and `mapObserver` together. Building operator chains is really just creating a template for wiring observers together on subscription.
+最重要的是要注意此操作符在做什么: 当你订阅它返回的 observable 时，它会创建 `mapObserver` 来完成工作并将 `observer` 和 `mapObserver` 连接起来。
+构建操作符链实际上只是创建一个将观察者与订阅 ( subscription ) 连接起来的模板。
 
-## Designing Observable: Making Operator Chains Pretty
+## 设计 Observable: 更优雅的操作符链
 
-If we were to have all of our operators implemented as standalone functions like the example above, chaining our operators gets a bit ugly:
+如果我们所有的操作符都是像上面示例中那样用独立函数实现的话，将操作符链接起来会有些难看:
 
 ```javascript
 map(map(myObservable, (x) => x + 1), (x) => x + 2);
 ```
 
-Now imagine the above, nested five or six operators deep with more complicated operators that have more arguments. Basically unreadable.
+可以想象一下上面的代码，嵌套了5个或6个更复杂的操作符将会产生更多的参数。导致代码完全不可读。
 
-You could go with a simple `pipe` implementation [(as suggested by Texas Toland)](https://twitter.com/AppShipIt/status/701806357012471809) that reduces over an array of these operators to produce your final observable, but that’s going to mean writing more complicated operators that return functions [(JSBin example of that here)](http://jsbin.com/vipuqiq/6/edit?js,console,output). It’s also not going to look perfect either:
+你可以使用简单的 `pipe` 实现 [(正如 Texas Toland 所建议的那样)](https://twitter.com/AppShipIt/status/701806357012471809)，它会对操作符数组进行累加以生成最终的 observable，但这意味着要编写更复杂的、返回函数的操作符，[(点击这里查看 JSBin 示例)](http://jsbin.com/vipuqiq/6/edit?js,console,output)。这同样没有使得一切变得完美:
 
 ```javascript
 pipe(myObservable, map(x => x + 1), map(x => x + 2));
 ```
 
-Ideally, we’d be able to chain things in a more natural way like so:
+理想的是我们能够将操作符以一种更自然的方式链接起来，比如这样:
 
 ```javascript
 myObservable.map(x => x + 1).map(x => x + 2);
 ```
 
-Fortunately, we already have an Observable class onto which we can put our operators to support this sort of chaining behavior. It doesn’t add any complexity to the operator implementation, but it does come at the cost of “junking up the prototype” I suppose, once you add enough operators, of which there are many — perhaps too many. Here is what our map operator looks like when added to our Observable implementation’s prototype [(with JSBin)](http://jsbin.com/quqibe/edit?js,console,output):
+幸运的是，我们的 Observable 类已经支持这种操作符的链式行为。它不会给操作符的实现代码任何额外的复杂度，但它的代价是破坏了我所提倡的“摒弃原型 ( prototype )”，一旦添加了足够你使用的操作符，原型中的方法或许就太多了。点击 [(这里的 JSBin 示例)](http://jsbin.com/quqibe/edit?js,console,output) 查看我们添加到 Observable 实现原型中的 map 操作符:
 
 ```javascript
 Observable.prototype.map = function (project) {
@@ -151,10 +150,10 @@ Observable.prototype.map = function (project) {
 };
 ```
 
-Now we have that nicer syntax we were going for. There are other benefits to this approach as well that are a little more advanced. For example, we can subclass Observable for specific types of observables (observables wrapping a Promise or a set of static values for example) and make optimizations for our operators by overriding them for that subclass.
+现在我们拥有了更好的语法。这种方法还有其他好处，也更高级。例如，我们可以将 Observable 子类化为特定类型的 observables (例如包装 Promise 或一组静态值的 observables)，并通过覆盖它们来对我们的运算符进行优化。
 
-## TLDR: Observables are a function that take an observer and return a function
+## TLDR: Observable 是函数，它接收 observer 并返回函数
 
-Keep in mind, after reading everything above, that all of this was designed around a simple function. **Observables are a function that take an observer and return a function**. Nothing more, nothing less. If you write a function that takes an observer and returns a function, is it async or sync? Neither. It’s a function. The behavior of any function all depends on how it’s implemented. So when dealing with an Observable, treat it like a function reference you’re passing around, not some magic, stateful alien type. When you’re building your operator chains, what you’re really doing is composing a function that sets up a chain of observers that are linked together and pass values through to your observer.
+记住，阅读以上所有内容后，所有的这一切都是围绕一个简单的函数设计的。**Observables 是函数，它接收 observer 并返回函数**。仅此而已。如果你编写了一个函数，它接收 observer 并返回函数，那它是异步的，还是同步的？都不是，它就是个函数。任何函数的行为都完全取决于它是如何实现的。所以，当处理 Observable 时，就像你所传递的函数引用那样对待它，而不是一些所谓的魔法，有状态的外星类型。当你构建操作符链式，你真正要做的是构成一个函数，该函数会设置链接在一起的观察者链，并将值传递给观察者。
 
-> NOTICE: The example Observable implementations still return functions above, where RxJS and the es-observable spec return Subscription objects. Subscription objects are a much better design, but I could write a whole article about that. I kept it to unsubscription functions just to keep the examples simple.
+> 注意: 示例中的 Observable 实现仍然返回的是函数，而 RxJS 和 es-observable 规范返回的是 Subscription 对象。Subscription 对象是一种更好的设计，但我又得写一整篇文章来讲它。所以我只保留了它的取消订阅功能，以保持本文中所有示例的简单性。
