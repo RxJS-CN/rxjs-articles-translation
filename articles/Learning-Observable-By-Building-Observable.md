@@ -12,17 +12,17 @@
 
 如果你真的想要理解 observable，你可以自己写个简单的。这并没有听上去那么困难，真心的。将 observable 归结为最精简的部分，无外乎就是某种特定类型的函数，该函数有其针对性的用途。
 
-### 模型:
+#### 模型:
 
   * 函数
   * 接收 observer: observer 是有 `next`、`error` 和 `complete` 方法的对象
   * 返回一个可取消的函数
 
-### 目的:
+#### 目的:
 
 将观察者 ( observer ) 与生产者 ( producer ) 连接，并返回一种手段来拆解与生产者之间的连接。观察者实际上是处理函数的注册表，处理函数可以随时间推移推送值。
 
-### 基本实现:
+#### 基本实现:
 
 ```javascript
 function myObservable(observer) {
@@ -46,7 +46,7 @@ function myObservable(observer) {
 
 你可以使用任何有 `next`、`erro` 和 `complete` 方法的简单 JavaScript 对象 (POJO) 来订阅 observable，但你所用来订阅 observable 的 POJO 观察者真的只是个开始。在 RxJS 5中，我们需要为你提供一些保障。下面罗列了一些重要的保障:
 
-### 观察者保障
+#### 观察者保障
 
   1. 如果你传递的观察者完全没有以上所述的三个方法，也是可以的。
   2. 你不想在 `complete` 或 `error` 之后调用 `next` 。
