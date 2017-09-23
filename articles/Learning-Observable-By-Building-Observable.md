@@ -135,7 +135,7 @@ pipe(myObservable, map(x => x + 1), map(x => x + 2));
 myObservable.map(x => x + 1).map(x => x + 2);
 ```
 
-幸运的是，我们的 Observable 类已经支持这种操作符的链式行为。它不会给操作符的实现代码任何额外的复杂度，但它的代价是破坏了我所提倡的“摒弃原型 ( prototype )”，一旦添加了足够你使用的操作符，原型中的方法或许就太多了。点击 [(这里的 JSBin 示例)](http://jsbin.com/quqibe/edit?js,console,output) 查看我们添加到 Observable 实现原型中的 map 操作符:
+幸运的是，我们的 Observable 类已经支持这种操作符的链式行为。它不会给操作符的实现代码任何额外的复杂度，但它的代价是违背了我所提倡的“摒弃原型 ( prototype )”，一旦添加了足够你使用的操作符，原型中的方法或许就太多了。点击 [(这里的 JSBin 示例)](http://jsbin.com/quqibe/edit?js,console,output) 查看我们添加到 Observable 实现原型中的 map 操作符:
 
 ```javascript
 Observable.prototype.map = function (project) {
