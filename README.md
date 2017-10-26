@@ -11,8 +11,9 @@
 
 ## 文章列表
   
-  * [[译] RxJS 调度器入门](./articles/PRIMER-ON-RXJS-SCHEDULERS.md) [2017-09-23 [@SangKa](https://github.com/SangKa) 翻译]
-  * [[译] 通过构建 Observable 来学习 Observable](./articles/Learning-Observable-By-Building-Observable.md) [2017-10-14 [@SangKa](https://github.com/SangKa) 翻译]
+  * [[译] 响应式脑电波](./articles/Reactive-Brain-Waves.md) [2017-10-25 [@SangKa](https://github.com/SangKa) 翻译]
+  * [[译] RxJS 调度器入门](./articles/PRIMER-ON-RXJS-SCHEDULERS.md) [2017-10-14 [@SangKa](https://github.com/SangKa) 翻译]
+  * [[译] 通过构建 Observable 来学习 Observable](./articles/Learning-Observable-By-Building-Observable.md) [2017-09-23 [@SangKa](https://github.com/SangKa) 翻译]
   * [[译] 关于 RxJS 中的 Subject](./articles/On-The-Subject-Of-Subjects.md) [2017-09-05 [@SangKa](https://github.com/SangKa) 翻译]
   * [[译] RxJS Observable 与 Promises 和 Async-Await 交互](./articles/RxJS-Observable-Interop-With-Promises-And-Async-Await.md) [2017-08-31 [@SangKa](https://github.com/SangKa) 翻译]
   * [[译] 热的 Vs 冷的 Observables](./articles/Hot-Vs-Cold-Observables.md) [2017-08-19 [@SangKa](https://github.com/SangKa) 翻译]
