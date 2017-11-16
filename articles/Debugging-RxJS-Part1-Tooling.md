@@ -148,4 +148,4 @@ const people = interval
 
 还可以通过 [NPM](https://www.npmjs.com/package/rxjs-spy) 来安装包。
 
-本系统的下篇文章 —「 调试 RxJS 第2部分：日志篇 」(下次翻译，敬请期待)
+本系列的下篇文章 —「 [调试 RxJS 第2部分：日志篇](./Debugging-RxJS-Part2-Logging.md) 」
