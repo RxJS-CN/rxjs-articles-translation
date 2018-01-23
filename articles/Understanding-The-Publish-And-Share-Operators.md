@@ -304,7 +304,7 @@ observer c: complete
 
 ## 特殊类型的 subjects
 
-`publish` 操作符有接变种，它们都以一种类似的方式对 `multicast` 进行了包装，传入的是 subjects，而不是工厂函数。但是，它们传入的是不同类型的 subjects 。
+`publish` 操作符有几个变种，它们都以一种类似的方式对 `multicast` 进行了包装，传入的是 subjects，而不是工厂函数。但是，它们传入的是不同类型的 subjects 。
 
 `publish` 变种使用的特殊类型的 subjects 包括:
 
