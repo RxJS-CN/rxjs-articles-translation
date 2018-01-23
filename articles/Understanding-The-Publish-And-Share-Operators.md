@@ -8,11 +8,11 @@
 
 我经常会被问及 `publish` 操作符的相关问题:
 
-  > _publish 和 share 之间的区别是什么？_
+  > publish 和 share 之间的区别是什么？
   > 
-  > _如何导入 refCount 操作符？_
+  > 如何导入 refCount 操作符？
   > 
-  > _何时使用 AsyncSubject？_
+  > 何时使用 AsyncSubject？
 
 我们来解答这些问题，并让你了解到更多内容，首先从基础入手。
 
@@ -22,8 +22,8 @@
 
 热的和冷的 observable 的特征在于 observable 通知的生产者是在哪创建的。在 Ben Lesh 的 [热的 Vs 冷的 Observables](./Hot-Vs-Cold-Observables.md) 一文中，他详细讨论了两者间的差异，这些差异可以归纳如下:
 
-  * 如果通知的生产者是观察者订阅 observable 时创建的，那么 observable 就是冷的。例如，`[timer](http://cn.rx.js.org/class/es6/Observable.js~Observable.html#static-method-timer)` observable 就是冷的，每次订阅时都会创建一个新的定时器。
-  * 如果通知的生产者不少每次观察者订阅 observable 时创建的，那么 observable 就是热的。例如，使用 `[fromEvent](http://cn.rx.js.org/class/es6/Observable.js~Observable.html#static-method-fromEvent)` 创建的 observable 就是热的，产生事件的元素存在于 DOM 之中，它不是观察者订阅时所创建的。
+  * 如果通知的生产者是观察者订阅 observable 时创建的，那么 observable 就是冷的。例如，[`timer`](http://cn.rx.js.org/class/es6/Observable.js~Observable.html#static-method-timer) observable 就是冷的，每次订阅时都会创建一个新的定时器。
+  * 如果通知的生产者不少每次观察者订阅 observable 时创建的，那么 observable 就是热的。例如，使用 [`fromEvent`](http://cn.rx.js.org/class/es6/Observable.js~Observable.html#static-method-fromEvent) 创建的 observable 就是热的，产生事件的元素存在于 DOM 之中，它不是观察者订阅时所创建的。
 
 冷的 observables 是单播的，每个观察者所接收到的通知都是来自不同的生产者，生产者是观察者订阅时所创建的。
 
@@ -33,7 +33,7 @@
 
 Subject 即是 observable，又是 observer (观察者)。通过使用观察者来订阅 subject，然后 subject 再订阅冷的 observable，可以让冷的 observable 变成热的。这是 RxJS 引入 subjects 的主要用途，在 Ben Lesh 的 [On the Subject of Subjects](./On-The-Subject-Of-Subjects.md) 一文中，他指出:
 
-  > _多播是 RxJS 中 Subjects 的主要用法。_
+  > **多播是 RxJS 中 Subjects 的主要用法。**
 
 我们来看下面的示例:
 
@@ -60,7 +60,7 @@ subject.subscribe(observer("b"));
 source.subscribe(subject);
 ```
 
-示例中的 `source` 是冷的。每次观察者订阅 `source` 时，传给 `[defer](http://cn.rx.js.rog/class/es6/Observable.js~Observable.html#static-method-defer)` 的工厂函数会创建一个发出随机数后完成的 observable 。
+示例中的 `source` 是冷的。每次观察者订阅 `source` 时，传给 [`defer`](http://cn.rx.js.rog/class/es6/Observable.js~Observable.html#static-method-defer) 的工厂函数会创建一个发出随机数后完成的 observable 。
 
 要让 `source` 变成多播的，需要观察者订阅 subject，然后 subject 再订阅 `source` 。`source` 只会看到一个订阅 ( subscription )，它也只生成一个包含随机数的 `next` 通知和一个 `complete` 通知。Subject 会将这些通知发送给它的观察者，输出如下所示:
 
@@ -75,7 +75,7 @@ observer b: complete
 
 ## multicast 操作符和 ConnectableObservable
 
-RxJS 引入了 `[multicast](http://cn.rx.js.org/class/es6/Observable.js~Observable.html#instance-method-multicast)` 操作符，它可以应用于 observable ，使其变成热的。此操作符封装了 subject 用于多播 observable 时所涉及的基础结构。
+RxJS 引入了 [`multicast`](http://cn.rx.js.org/class/es6/Observable.js~Observable.html#instance-method-multicast) 操作符，它可以应用于 observable ，使其变成热的。此操作符封装了 subject 用于多播 observable 时所涉及的基础结构。
 
 在看 `multicast` 操作符之前，我们使用一个简单实现的 `multicast` 函数来替代上面示例中的 subject :
 
