@@ -31,7 +31,7 @@
 
 有些时候，需要冷的 observable 具有多播的行为，RxJS 引入了 `Subject` 类使之成为可能。
 
-Subject 即是 observable，又是 observer (观察者)。通过使用观察者来订阅 subject，然后 subject 再订阅冷的 observable，可以让冷的 observable 变成热的。这是 RxJS 引入 subjects 的主要用途，在 Ben Lesh 的 [On the Subject of Subjects](./On-The-Subject-Of-Subjects.md) 一文中，他指出:
+Subject 即是 observable，又是 observer (观察者)。通过使用观察者来订阅 subject，然后 subject 再订阅冷的 observable，可以让冷的 observable 变成热的。这是 RxJS 引入 subjects 的主要用途，在 Ben Lesh 的 [关于 RxJS 中的 Subject](./On-The-Subject-Of-Subjects.md) 一文中，他指出:
 
   > **多播是 RxJS 中 Subjects 的主要用法。**
 
