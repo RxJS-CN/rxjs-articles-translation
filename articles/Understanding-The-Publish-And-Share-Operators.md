@@ -1,4 +1,4 @@
-# [译]: 理解 publish 和 share 操作符
+# [译] RxJS: 理解 publish 和 share 操作符
 
 > 原文链接: [https://blog.angularindepth.com/rxjs-understanding-the-publish-and-share-operators-16ea2f446635](https://blog.angularindepth.com/rxjs-understanding-the-publish-and-share-operators-16ea2f446635)
 
