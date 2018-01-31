@@ -11,6 +11,7 @@
 
 ## 文章列表
   
+  * [[译] RxJS: multicast 操作符的秘密](./articles/The-Secret-Of-Multicast.md) [2018-01-31 [@SangKa](https://github.com/SangKa) 翻译]
   * [[译] RxJS: 理解 publish 和 share 操作符](./articles/Understanding-The-Publish-And-Share-Operators.md) [2018-01-23 [@SangKa](https://github.com/SangKa) 翻译]
   * [[译] 调试 RxJS 第2部分: 日志篇](./articles/Debugging-RxJS-Part2-Logging.md) [2017-11-15 [@SangKa](https://github.com/SangKa) 翻译]
   * [[译] 调试 RxJS 第1部分: 工具篇](./articles/Debugging-RxJS-Part1-Tooling.md) [2017-11-08 [@SangKa](https://github.com/SangKa) 翻译]

@@ -300,7 +300,7 @@ observer c: complete
 
 `c` 是在调用过 publish 的 observable 完成后订阅的，所以订阅的引用计数已经是0，此时将会再生成一个订阅。但是，`publish` 传给 `multicast` 的是 subject，而不是工厂函数，因为 subjects 无法被复用，所以 `c` 只能收到 `complete` 通知。
 
-`publish` 和 `multicast` 操作符都接受一个可选的 `selector` 函数，如果指定了此函数，操作符的行为将会有很大的不同。这将在另一篇文章 [multicast 的秘密](https://blog.angularindepth.com/rxjs-multicasts-secret-760e1a2b176e)中详细介绍。
+`publish` 和 `multicast` 操作符都接受一个可选的 `selector` 函数，如果指定了此函数，操作符的行为将会有很大的不同。这将在另一篇文章 [multicast 操作符的秘密](./The-Secret-Of-Multicast.md)中详细介绍。
 
 ## 特殊类型的 subjects
 
