@@ -23,7 +23,7 @@
 热的和冷的 observable 的特征在于 observable 通知的生产者是在哪创建的。在 Ben Lesh 的 [热的 Vs 冷的 Observables](./Hot-Vs-Cold-Observables.md) 一文中，他详细讨论了两者间的差异，这些差异可以归纳如下:
 
   * 如果通知的生产者是观察者订阅 observable 时创建的，那么 observable 就是冷的。例如，[`timer`](http://cn.rx.js.org/class/es6/Observable.js~Observable.html#static-method-timer) observable 就是冷的，每次订阅时都会创建一个新的定时器。
-  * 如果通知的生产者不少每次观察者订阅 observable 时创建的，那么 observable 就是热的。例如，使用 [`fromEvent`](http://cn.rx.js.org/class/es6/Observable.js~Observable.html#static-method-fromEvent) 创建的 observable 就是热的，产生事件的元素存在于 DOM 之中，它不是观察者订阅时所创建的。
+  * 如果通知的生产者不是每次观察者订阅 observable 时创建的，那么 observable 就是热的。例如，使用 [`fromEvent`](http://cn.rx.js.org/class/es6/Observable.js~Observable.html#static-method-fromEvent) 创建的 observable 就是热的，产生事件的元素存在于 DOM 之中，它不是观察者订阅时所创建的。
 
 冷的 observables 是单播的，每个观察者所接收到的通知都是来自不同的生产者，生产者是观察者订阅时所创建的。
 
