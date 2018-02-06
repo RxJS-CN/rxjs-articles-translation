@@ -449,4 +449,4 @@ observer c: complete
 
 就这样了，本文到此结束。我们介绍了六个操作符，但它们全是通过一种类似的方式来实现的，它们全都符合同一个基本的心智模型: 一个源 observable、一个订阅源 observable 的 subject 和多个订阅 subject 的观察者。
 
-本文只是简略地介绍了 `refCount` 方法。想要深入了解，请参见 [RxJS: 如何使用 refCount](https://blog.angularindepth.com/rxjs-how-to-use-refcount-73a0c6619a4e)。
+本文只是简略地介绍了 `refCount` 方法。想要深入了解，请参见 [RxJS: 如何使用 refCount](./How-To-Use-RefCount.md)。
