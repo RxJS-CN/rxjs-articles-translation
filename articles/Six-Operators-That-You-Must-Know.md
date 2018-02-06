@@ -29,7 +29,7 @@ const getPostTwo$ = Rx.Observable.timer(2000).mapTo({id: 2});
 Rx.Observable.forkJoin(getPostOne$, getPostTwo$).subscribe(res => console.log(res)) 
 ```
 
-## **_别让我知道直到所有的 Observables 都完成了，然后再一次性的给我所有的值。(以数组的形式)_**
+## **_直到所有的 Observables 都完成了才通知我，然后一次性地给我所有的值。(以数组的形式)_**
 
 ![forkJoin](../assets/Six-Operators-That-You-Must-Know/forkJoin.gif)
 
