@@ -102,6 +102,6 @@ function takeWhileInclusive<T>(
 
 ## 这种方式可靠吗？
 
-RxJS 5 是相当新的库，它的文档扔在进行中，所以这种方式还没有在文档中出现，只是在内部使用。公开的 [TypeScript 签名](https://github.com/ReactiveX/rxjs/blob/5.4.3/src/operator/multicast.ts#L7-L10)指出了并非永远返回的是 `ConnectableObservable`，也有相对应的[单元测试](https://github.com/ReactiveX/rxjs/blob/5.4.3/spec/operators/multicast-spec.ts#L86-L144)。
+RxJS 5 是相当新的库，它的文档仍在进行中，所以这种方式还没有在文档中出现，只是在内部使用。公开的 [TypeScript 签名](https://github.com/ReactiveX/rxjs/blob/5.4.3/src/operator/multicast.ts#L7-L10)指出了并非永远返回的是 `ConnectableObservable`，也有相对应的[单元测试](https://github.com/ReactiveX/rxjs/blob/5.4.3/spec/operators/multicast-spec.ts#L86-L144)。
 
 RxJS 通常比较灵活，因此实现这些函数还有其他方式，但上面的示例说明了当需要本地共享源 observable 时，`publish` 和 `multicast` 简单易用，值得考虑。

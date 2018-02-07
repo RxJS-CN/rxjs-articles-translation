@@ -23,7 +23,7 @@ const clicks = new Observable(observer => {
 });
 ```
 
-为什么展示这个跟 Subjects 没半点关系的示例？好吧，一点是它展示了为什么不总是需要使用 Subject，另外一点这有个隐藏的 subject... (某种程度上可以说是 subject )。这里要注意的一点是，Observable 是通过 addEventListener 来包装按钮的处理函数的注册，而 addEventListener 本身就是一个 subject 。…至少根据 [“Gang Of Four” 的观察者模式](https://en.wikipedia.org/wiki/Design_Patterns)来说是这样的。
+为什么展示这个跟 Subjects 没半点关系的示例？好吧，一点是它展示了为什么不总是需要使用 Subject，另外一点这有个隐藏的 subject... (某种程度上可以说是 subject )。这里要注意的一点是，这个 Observable 包装了对于按钮的 addEventListener 事件处理函数的注册操作，而 addEventListener 本身就是一个 subject 。…至少根据 [“Gang Of Four” 的观察者模式](https://en.wikipedia.org/wiki/Design_Patterns)来说是这样的。
 
 ## 观察者模式
 
@@ -33,7 +33,7 @@ const clicks = new Observable(observer => {
 
 模式本身很简单。Observers 是具有通知方法的类，Subject 也是类，它具有向内部观察者列表添加或删除观察者的方法和通知观察者列表的方法。
 
-RxJS 中的 Subjects 并没有太差区别。当使用 observer 对 Rx Subject 调用 `subscribe` 时，Subject 会将该 observer 添加到内部的观察者列表中。同样的，如果使用一到三个函数来调用 `subscribe`，Subject 会将它们包装成一个 observer，然后添加到观察者列表中。当调用 Subject 的 `next(value)` 时，它会遍历观察者列表并将 `value` 传递给 `next` 方法。对于 `error` 和 `complete` 也是同样的。要想从 subject 的观察者列表中移除 observer，只需简单调用 subscription 的 `unsubscribe` 方法即可，subscription 是将 observer 添加到观察者列表中时返回的。
+RxJS 中的 Subjects 并没有大差别。当对一个 Rx Subject 使用一个 observer 调用 `subscribe` 时，Subject 会将该 observer 添加到内部的观察者列表中。同样的，如果使用一到三个函数来调用 `subscribe`，Subject 会将它们包装成一个 observer，然后添加到观察者列表中。当调用 Subject 的 `next(value)` 时，它会遍历观察者列表并将 `value` 一并传递给观察者们的 `next` 方法。对于 `error` 和 `complete` 也是同样的。要想从 subject 的观察者列表中移除 observer，只需简单调用 subscription 的 `unsubscribe` 方法即可，subscription 是在将 observer 添加到观察者列表中时被返回的对象。
 
 ```javascript
 const subject = new Subject();
@@ -53,7 +53,7 @@ sub1.unsubscribe();
 
 大概 Subject 和 Observable 之间一个很重要的区别就是 Subject 是有状态的，它维护观察者列表。另一方面，[Observable 真的只是一个函数](https://medium.com/@benlesh/learning-observable-by-building-observable-d5da57405d87)，它建立了观察本身。
 
-虽然 Subjects 是 Observables，但 Subjects 还实现了 Observer 接口。也就是说，它们拥有 `next`、`error` 和 `complete` 方法。这些方法用来通知 subject 内部观察者列表中的 observers 。这意味着 subject 可以用作订阅任何 observable 的 observer 。
+虽然 Subjects 是 Observables，但 Subjects 还实现了 Observer 接口。也就是说，它们拥有 `next`、`error` 和 `complete` 方法。这些方法用来通知 subject 内部观察者列表中的 observers 。这意味着 subject 可以作为 observer 来订阅任何 observable。
 
 ```javascript
 // 为了使两个观察者 observer1 和 observer2 “共享” tick$，

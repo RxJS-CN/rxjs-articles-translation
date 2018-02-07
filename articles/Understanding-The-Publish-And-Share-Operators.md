@@ -139,11 +139,11 @@ observer a: complete
 observer b: complete
 ```
 
-调用 `connect` 时，传入 `multicast` 操作符的 subject 会订阅源 observable，而 subject 的观察者会收到多播通知，这正符合 RxJS 多播的基本心智模型。
+调用 `connect` 时，被传入 `multicast` 操作符的 subject 会订阅源 observable，而 subject 的观察者会收到多播通知，这正符合 RxJS 多播的基本心智模型。
 
 ConnectableObservable 还有另外一个方法 `refCount`，它可以用来确定源 observable 何时产生了订阅。
 
-`refCount` 看上去就像是操作符，也就是说，它是在 observable 上调用的方法并且返回另一个 observable，但是它只是 `ConnectableObservable` 的方法而且不需要导入。顾名思义，`refCount` 返回 observable， 它负责维护已产生的订阅的引用计数。
+`refCount` 看上去就像是操作符，也就是说，它是 observable 上的调用方法并且返回另一个 observable，但它是 `ConnectableObservable` 的方法且不需要被导入。顾名思义，`refCount` 返回 observable， 它负责维护已产生的订阅的引用计数。
 
 当观察者订阅负责引用计数的 observable 时，引用计数会增加，如果前一个引用计数为0的话，负责多播基础结构的 subject 会订阅源 observable 。当观察者取消订阅时，引用计数会减少，如果引用计数归零的话，subject 会取消对源 observable 的订阅。
 
@@ -298,7 +298,7 @@ observer c: complete
 
 `b` 没有收到第一个 `next` 通知是因为源 observable 的第一个 `next` 通知是立即发出的，所以只有 `a` 能收到。
 
-`c` 是在调用过 publish 的 observable 完成后订阅的，所以订阅的引用计数已经是0，此时将会再生成一个订阅。但是，`publish` 传给 `multicast` 的是 subject，而不是工厂函数，因为 subjects 无法被复用，所以 `c` 只能收到 `complete` 通知。
+`c` 是在被 publish 的 observable 完成后订阅的，所以订阅的引用计数已经是0，此时将会再生成一个订阅。但是，`publish` 传给 `multicast` 的是 subject，而不是工厂函数，因为 subjects 无法被复用，所以 `c` 只能收到 `complete` 通知。
 
 `publish` 和 `multicast` 操作符都接受一个可选的 `selector` 函数，如果指定了此函数，操作符的行为将会有很大的不同。这将在另一篇文章 [multicast 操作符的秘密](./The-Secret-Of-Multicast.md)中详细介绍。
 
@@ -377,14 +377,14 @@ observer c: complete
 观察者收到的通知可归纳如下:
 
   * `a` 是在 `connect` 调用前订阅的，此时 subject 还没有收到 `next` 通知，所以 `a` 能收到源 observable 的两个 `next` 通知和 `complete` 通知。
-  * `b` 是在 `connect` 调用后订阅的，此时 subject 已经收到了源 observable 的第一个 `next` 通知，所以 `b` 能收到重放的 `next` 通知、源 observable 的第二个 `next` 通知和 `complete` 通知。
-  * `c` 是在源 observable 完成后订阅的，所以它能收到重放的 `next` 通知和 `complete` 通知。
+  * `b` 是在 `connect` 调用后订阅的，此时 subject 已经收到了源 observable 的第一个 `next` 通知，所以 `b` 能收到重放的第一个 `next` 通知、源 observable 的第二个 `next` 通知和 `complete` 通知。
+  * `c` 是在源 observable 完成后订阅的，所以它能收到重放的一个 `next` 通知和一个 `complete` 通知（译注：调用 publishReplay(1) 参数 1 决定只重放一个 next ）。
 
-来看看 `c` 的行为，很明显，不同于 `publish` 操作符，`publishReplay` 操作符适合使用 `refCount` 方法，因为观察者在源 observable 完成后订阅依然能收到任意数量的重放的 `next` 通知。
+来看看 `c` 的行为，很明显，不同于 `publish` 操作符，`publishReplay` 操作符适合使用 `refCount` 方法，因为即使在源 observable 完成后对其订阅，观察者依然能收到任意数量重放的 `next` 通知。
 
 ### publishLast 操作符
 
-`publishLast` 传给 `multicast` 的是 `AsyncSubject`，而不是 `Subject` 。`AsyncSubject` 是最特别的特殊类型 subjects 。只有当它完成时，才会发出 `next` 通知 (如果有 `next` 通知的话) 和 `complete` 通知，这个 `next` 通知是源 observable 中的最后一个 `next` 通知。
+`publishLast` 传给 `multicast` 的是 `AsyncSubject`，而不是 `Subject` 。`AsyncSubject` 是最特别的特殊类型 subjects 。只有当它完成时，才会发出从源 observable 收到的最后一个 `next` 通知 (如果源 observable 有发送 `next` 通知的话) 和 `complete` 通知。
 
 ```ts
 const p = source.publishLast();
@@ -405,12 +405,24 @@ observer c: 54
 observer c: complete
 ```
 
+（译注）也可能是如下输出:
+```
+observer a: 23
+observer a: complete
+observer b: 23
+observer b: complete
+observer c: 23
+observer c: complete
+```
+
+
+
 观察者收到的通知可归纳如下:
 
   * `a` 和 `b` 都是在源 observable 完成前订阅的，但直到源 observable 完成它们才能收到通知，它们能收到带有第二个随机数的 `next` 通知和 `complete` 通知。
   * `c` 是在源 observable 完成后订阅的，它能收到带有第二个随机数的 `next` 通知和 `complete` 通知。
 
-与 `publishReplay` 类似，`publishLast` 操作符适合使用 `refCount` 方法，因为观察者在源 observable 完成后订阅依然能收到任意数量的重放的 `next` 通知。
+与 `publishReplay` 类似，`publishLast` 操作符适合使用 `refCount` 方法，因为即使在源 observable 完成后对其订阅，观察者依然能收到**最后一个** `next` 通知。
 
 ## share 操作符
 
@@ -445,7 +457,7 @@ observer c: complete
 在上面这些示例中，我们介绍了 `publish` 和 `share` 操作符，当源 observable 完成时，`a` 和 `b` 会自动取消订阅。如果源 observable 报错，它们也同样会自动取消订阅。`publish` 和 `share` 操作符还有另外一个不同点:
 
   * 如果源 observable 报错，由 `publish` 返回的 observable 的任何将来的订阅者都将收到 `error` 通知。
-  * 但是，由 `share` 返回的 observable 的任何将来的订阅者会生成源 observable 的一个新订阅，因为错误会自动取消任何订阅者的订阅，将其引用计数归零。
+  * 然而，由 `share` 返回的 observable 的任何将来的订阅者会生成源 observable 的一个新订阅，因为错误会自动取消任何订阅者的订阅，将其引用计数归零。
 
 就这样了，本文到此结束。我们介绍了六个操作符，但它们全是通过一种类似的方式来实现的，它们全都符合同一个基本的心智模型: 一个源 observable、一个订阅源 observable 的 subject 和多个订阅 subject 的观察者。
 
