@@ -378,7 +378,7 @@ observer c: complete
 
   * `a` 是在 `connect` 调用前订阅的，此时 subject 还没有收到 `next` 通知，所以 `a` 能收到源 observable 的两个 `next` 通知和 `complete` 通知。
   * `b` 是在 `connect` 调用后订阅的，此时 subject 已经收到了源 observable 的第一个 `next` 通知，所以 `b` 能收到重放的第一个 `next` 通知、源 observable 的第二个 `next` 通知和 `complete` 通知。
-  * `c` 是在源 observable 完成后订阅的，所以它能收到重放的一个 `next` 通知和一个 `complete` 通知（调用 publishReplay(1) 参数 1 ）。
+  * `c` 是在源 observable 完成后订阅的，所以它能收到重放的一个 `next` 通知和一个 `complete` 通知（译注：调用 publishReplay(1) 参数 1 决定只重放一个 next ）。
 
 来看看 `c` 的行为，很明显，不同于 `publish` 操作符，`publishReplay` 操作符适合使用 `refCount` 方法，因为观察者在源 observable 完成后订阅依然能收到任意数量的重放的 `next` 通知。
 
