@@ -457,7 +457,7 @@ observer c: complete
 在上面这些示例中，我们介绍了 `publish` 和 `share` 操作符，当源 observable 完成时，`a` 和 `b` 会自动取消订阅。如果源 observable 报错，它们也同样会自动取消订阅。`publish` 和 `share` 操作符还有另外一个不同点:
 
   * 如果源 observable 报错，由 `publish` 返回的 observable 的任何将来的订阅者都将收到 `error` 通知。
-  * 但是，由 `share` 返回的 observable 的任何将来的订阅者会生成源 observable 的一个新订阅，因为错误会自动取消任何订阅者的订阅，将其引用计数归零。
+  * 然而，由 `share` 返回的 observable 的任何将来的订阅者会生成源 observable 的一个新订阅，因为错误会自动取消任何订阅者的订阅，将其引用计数归零。
 
 就这样了，本文到此结束。我们介绍了六个操作符，但它们全是通过一种类似的方式来实现的，它们全都符合同一个基本的心智模型: 一个源 observable、一个订阅源 observable 的 subject 和多个订阅 subject 的观察者。
 
