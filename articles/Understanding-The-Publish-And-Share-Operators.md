@@ -143,7 +143,7 @@ observer b: complete
 
 ConnectableObservable 还有另外一个方法 `refCount`，它可以用来确定源 observable 何时产生了订阅。
 
-`refCount` 看上去就像是操作符，也就是说，它是在 observable 上调用的方法并且返回另一个 observable，但是它只是 `ConnectableObservable` 的方法而且不需要导入。顾名思义，`refCount` 返回 observable， 它负责维护已产生的订阅的引用计数。
+`refCount` 看上去就像是操作符，也就是说，它是 observable 上的调用方法并且返回另一个 observable，但它是 `ConnectableObservable` 的方法且不需要被导入。顾名思义，`refCount` 返回 observable， 它负责维护已产生的订阅的引用计数。
 
 当观察者订阅负责引用计数的 observable 时，引用计数会增加，如果前一个引用计数为0的话，负责多播基础结构的 subject 会订阅源 observable 。当观察者取消订阅时，引用计数会减少，如果引用计数归零的话，subject 会取消对源 observable 的订阅。
 
