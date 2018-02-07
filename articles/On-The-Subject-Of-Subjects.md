@@ -53,7 +53,7 @@ sub1.unsubscribe();
 
 大概 Subject 和 Observable 之间一个很重要的区别就是 Subject 是有状态的，它维护观察者列表。另一方面，[Observable 真的只是一个函数](https://medium.com/@benlesh/learning-observable-by-building-observable-d5da57405d87)，它建立了观察本身。
 
-虽然 Subjects 是 Observables，但 Subjects 还实现了 Observer 接口。也就是说，它们拥有 `next`、`error` 和 `complete` 方法。这些方法用来通知 subject 内部观察者列表中的 observers 。这意味着 subject 可以用作订阅任何 observable 的 observer 。
+虽然 Subjects 是 Observables，但 Subjects 还实现了 Observer 接口。也就是说，它们拥有 `next`、`error` 和 `complete` 方法。这些方法用来通知 subject 内部观察者列表中的 observers 。这意味着 subject 可以作为 observer 来订阅任何 observable。
 
 ```javascript
 // 为了使两个观察者 observer1 和 observer2 “共享” tick$，
