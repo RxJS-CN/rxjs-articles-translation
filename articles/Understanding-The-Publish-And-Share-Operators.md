@@ -422,7 +422,7 @@ observer c: complete
   * `a` 和 `b` 都是在源 observable 完成前订阅的，但直到源 observable 完成它们才能收到通知，它们能收到带有第二个随机数的 `next` 通知和 `complete` 通知。
   * `c` 是在源 observable 完成后订阅的，它能收到带有第二个随机数的 `next` 通知和 `complete` 通知。
 
-与 `publishReplay` 类似，`publishLast` 操作符适合使用 `refCount` 方法，因为观察者在源 observable 完成后订阅依然能收到任意数量的重放的 `next` 通知。
+与 `publishReplay` 类似，`publishLast` 操作符适合使用 `refCount` 方法，因为即使在源 observable 完成后对其订阅，观察者依然能收到**最后一个** `next` 通知。
 
 ## share 操作符
 
