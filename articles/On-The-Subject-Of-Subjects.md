@@ -23,7 +23,7 @@ const clicks = new Observable(observer => {
 });
 ```
 
-为什么展示这个跟 Subjects 没半点关系的示例？好吧，一点是它展示了为什么不总是需要使用 Subject，另外一点这有个隐藏的 subject... (某种程度上可以说是 subject )。这里要注意的一点是，Observable 是通过 addEventListener 来包装按钮的处理函数的注册，而 addEventListener 本身就是一个 subject 。…至少根据 [“Gang Of Four” 的观察者模式](https://en.wikipedia.org/wiki/Design_Patterns)来说是这样的。
+为什么展示这个跟 Subjects 没半点关系的示例？好吧，一点是它展示了为什么不总是需要使用 Subject，另外一点这有个隐藏的 subject... (某种程度上可以说是 subject )。这里要注意的一点是，这个 Observable 包装了对于按钮的 addEventListener 事件处理函数的注册操作，而 addEventListener 本身就是一个 subject 。…至少根据 [“Gang Of Four” 的观察者模式](https://en.wikipedia.org/wiki/Design_Patterns)来说是这样的。
 
 ## 观察者模式
 
