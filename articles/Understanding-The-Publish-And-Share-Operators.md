@@ -139,7 +139,7 @@ observer a: complete
 observer b: complete
 ```
 
-调用 `connect` 时，传入 `multicast` 操作符的 subject 会订阅源 observable，而 subject 的观察者会收到多播通知，这正符合 RxJS 多播的基本心智模型。
+调用 `connect` 时，被传入 `multicast` 操作符的 subject 会订阅源 observable，而 subject 的观察者会收到多播通知，这正符合 RxJS 多播的基本心智模型。
 
 ConnectableObservable 还有另外一个方法 `refCount`，它可以用来确定源 observable 何时产生了订阅。
 
