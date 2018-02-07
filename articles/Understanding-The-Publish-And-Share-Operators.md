@@ -405,6 +405,18 @@ observer c: 54
 observer c: complete
 ```
 
+（译注）也可能是如下输出:
+```
+observer a: 23
+observer a: complete
+observer b: 23
+observer b: complete
+observer c: 23
+observer c: complete
+```
+
+
+
 观察者收到的通知可归纳如下:
 
   * `a` 和 `b` 都是在源 observable 完成前订阅的，但直到源 observable 完成它们才能收到通知，它们能收到带有第二个随机数的 `next` 通知和 `complete` 通知。
