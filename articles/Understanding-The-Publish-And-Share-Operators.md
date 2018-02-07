@@ -298,7 +298,7 @@ observer c: complete
 
 `b` 没有收到第一个 `next` 通知是因为源 observable 的第一个 `next` 通知是立即发出的，所以只有 `a` 能收到。
 
-`c` 是在调用过 publish 的 observable 完成后订阅的，所以订阅的引用计数已经是0，此时将会再生成一个订阅。但是，`publish` 传给 `multicast` 的是 subject，而不是工厂函数，因为 subjects 无法被复用，所以 `c` 只能收到 `complete` 通知。
+`c` 是在被 publish 的 observable 完成后订阅的，所以订阅的引用计数已经是0，此时将会再生成一个订阅。但是，`publish` 传给 `multicast` 的是 subject，而不是工厂函数，因为 subjects 无法被复用，所以 `c` 只能收到 `complete` 通知。
 
 `publish` 和 `multicast` 操作符都接受一个可选的 `selector` 函数，如果指定了此函数，操作符的行为将会有很大的不同。这将在另一篇文章 [multicast 操作符的秘密](./The-Secret-Of-Multicast.md)中详细介绍。
 
@@ -377,8 +377,8 @@ observer c: complete
 观察者收到的通知可归纳如下:
 
   * `a` 是在 `connect` 调用前订阅的，此时 subject 还没有收到 `next` 通知，所以 `a` 能收到源 observable 的两个 `next` 通知和 `complete` 通知。
-  * `b` 是在 `connect` 调用后订阅的，此时 subject 已经收到了源 observable 的第一个 `next` 通知，所以 `b` 能收到重放的 `next` 通知、源 observable 的第二个 `next` 通知和 `complete` 通知。
-  * `c` 是在源 observable 完成后订阅的，所以它能收到重放的 `next` 通知和 `complete` 通知。
+  * `b` 是在 `connect` 调用后订阅的，此时 subject 已经收到了源 observable 的第一个 `next` 通知，所以 `b` 能收到重放的第一个 `next` 通知、源 observable 的第二个 `next` 通知和 `complete` 通知。
+  * `c` 是在源 observable 完成后订阅的，所以它能收到重放的一个 `next` 通知和一个 `complete` 通知（调用 publishReplay(1) 参数 1 ）。
 
 来看看 `c` 的行为，很明显，不同于 `publish` 操作符，`publishReplay` 操作符适合使用 `refCount` 方法，因为观察者在源 observable 完成后订阅依然能收到任意数量的重放的 `next` 通知。
 
