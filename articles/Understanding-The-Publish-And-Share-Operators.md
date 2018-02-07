@@ -384,7 +384,7 @@ observer c: complete
 
 ### publishLast 操作符
 
-`publishLast` 传给 `multicast` 的是 `AsyncSubject`，而不是 `Subject` 。`AsyncSubject` 是最特别的特殊类型 subjects 。只有当它完成时，才会发出 `next` 通知 (如果有 `next` 通知的话) 和 `complete` 通知，这个 `next` 通知是源 observable 中的最后一个 `next` 通知。
+`publishLast` 传给 `multicast` 的是 `AsyncSubject`，而不是 `Subject` 。`AsyncSubject` 是最特别的特殊类型 subjects 。只有当它完成时，才会发出从源 observable 收到的最后一个 `next` 通知 (如果源 observable 有发送 `next` 通知的话) 和 `complete` 通知。
 
 ```ts
 const p = source.publishLast();
