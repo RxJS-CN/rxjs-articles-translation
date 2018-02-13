@@ -8,7 +8,7 @@ RxJS 中的 Subjects 经常被误解。因为它们允许你命令式地向 Obse
 // 当人们发现不太清楚如何做时，通常会首先使用 Subjects
 // (不要这样做)
 const subject = new Subject();
-button.addEventListener('click', () => subject.next('click');
+button.addEventListener('click', () => subject.next('click'));
 subject.subscribe(x => console.log(x));
 ```
 
