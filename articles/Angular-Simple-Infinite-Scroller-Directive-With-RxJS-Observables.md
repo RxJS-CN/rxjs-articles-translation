@@ -1,4 +1,4 @@
-# [译] Angular: 使用 RxJS Observables 实现的简易版无限滚动加载指令
+# [译] Angular: 使用 RxJS Observables 来实现简易版的无限滚动加载指令
 
 > 原文链接: [https://codeburst.io/angular-2-simple-infinite-scroller-directive-with-rxjs-observables-a989b12d4fb1](https://codeburst.io/angular-2-simple-infinite-scroller-directive-with-rxjs-observables-a989b12d4fb1)
 
