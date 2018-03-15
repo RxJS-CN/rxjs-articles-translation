@@ -6,7 +6,7 @@
 
 这是一次尝试，使用 RxJS 来实现简单的无限滚动加载。
 
-Angular 版本实现的文章: [使用 RxJS Observables 实现的简易版无限滚动加载指令](https://codeburst.io/angular-2-simple-infinite-scroller-directive-with-rxjs-observables-a989b12d4fb1)
+Angular 版本实现的文章: [使用 RxJS Observables 实现的简易版无限滚动加载指令](./Angular-Simple-Infinite-Scroller-Directive-With-RxJS-Observables.md)
 
 ## 什么是响应式编程？
 
@@ -203,4 +203,4 @@ requestOnScroll$.subscribe(processData);
 
 ## _在我的下篇文章中，我将会尝试在 Angular 中创建一个无限滚动加载指令来实现它。_
 
-更新: 这是我下篇文章的链接 [使用 RxJS Observables 实现的简易版无限滚动加载指令](https://codeburst.io/angular-2-simple-infinite-scroller-directive-with-rxjs-observables-a989b12d4fb1)
+更新: 这是我下篇文章的链接 [使用 RxJS Observables 实现的简易版无限滚动加载指令](./Angular-Simple-Infinite-Scroller-Directive-With-RxJS-Observables.md)
