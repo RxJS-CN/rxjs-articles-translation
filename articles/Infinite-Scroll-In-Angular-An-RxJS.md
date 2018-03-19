@@ -68,7 +68,7 @@
   * **pageByResize$**: 包含基于 resize 事件的页码
   * **pageByManual$**: 包含基于手动事件的页码 (例如，如果页面上仍有空白区域，我们需要加载下一页数据)
 
-如果我们能够以有效的方式合并这3个页码流，那么我们将得到一个名为 `**pageToLoad$**` 的新的流，它包含由 scroll 事件、resize 事件和手动事件所创建的页码。
+如果我们能够以有效的方式合并这3个页码流，那么我们将得到一个名为 **`pageToLoad$`** 的新的流，它包含由 scroll 事件、resize 事件和手动事件所创建的页码。
 
 ![marble-diagram-4](../assets/Infinite-Scroll-In-Angular-An-RxJS/marble-diagram-4.png)
 
