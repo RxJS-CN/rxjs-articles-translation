@@ -251,7 +251,7 @@ let direction$ = keydown$
 let length$ = new BehaviorSubject<number>(SNAKE_LENGTH);
 ```
 
-到这，实现 `snakeLength$` 只需一小步:
+到这，距离实现 `snakeLength$` 只需一小步:
 
 ```ts
 let snakeLength$ = length$
