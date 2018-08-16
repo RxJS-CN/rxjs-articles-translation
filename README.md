@@ -11,6 +11,7 @@
 
 ## 文章列表
   
+  * [[译] RxJS 高级缓存](./articles/ADVANCED-CACHING-WITH-RXJS.md) [2018-08-16 [@SangKa](https://github.com/SangKa) 翻译]
   * [[译] RxJS: 使用超直观的交互图来学习组合操作符](./articles/Learn-To-Combine-RxJS-Sequences-With-Super-Intuitive-Interactive-Diagrams.md) [2018-07-09 [@SangKa](https://github.com/SangKa) 翻译]
   * [[译] RxJS 游戏之贪吃蛇](./articles/TAMING-SNAKES-WITH-REACTIVE-STREAMS.md) [2018-04-09 [@SangKa](https://github.com/SangKa) 翻译]
   * [[译] 使用 Angular 和 RxJS 实现的无限滚动加载](./articles/Infinite-Scroll-In-Angular-An-RxJS.md) [2018-03-19 [@SangKa](https://github.com/SangKa) 翻译]
